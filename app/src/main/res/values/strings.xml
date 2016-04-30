@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">List It Up</string>
+    <string name="btn_done">OK</string>
+    <string name="menu_add">Add item</string>
+</resources>
