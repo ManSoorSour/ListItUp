@@ -16,12 +16,12 @@ import nemphys.listitup.R;
 import nemphys.listitup.model.OnChangeListener;
 import nemphys.listitup.model.ToDoModel;
 
-public class MainActivity extends AppCompatActivity implements OnChangeListener<ToDoModel> {
+public class MainActivity extends AppCompatActivity implements
+        OnChangeListener<ToDoModel> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ToDoModel model;
-    private ListView listToDo;
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -29,12 +29,14 @@ public class MainActivity extends AppCompatActivity implements OnChangeListener<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        model = new ToDoModel();
+        model = new ToDoModel(this);
         model.addListener(this);
-        listToDo = (ListView) findViewById(R.id.listToDo);
-        adapter = new ArrayAdapter<>(this, R.layout.item_todo, R.id.txtItemName,
-                model.getToDoList());
-        listToDo.setAdapter(adapter);
+        ListView listToDo = (ListView) findViewById(R.id.listToDo);
+        adapter = new ArrayAdapter<>(this, R.layout.item_todo,
+                R.id.txtItemName, model.getToDoList());
+        if (listToDo != null) {
+            listToDo.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -52,13 +54,14 @@ public class MainActivity extends AppCompatActivity implements OnChangeListener<
                         .setTitle("Neue Aufgabe hinzufügen")
                         .setMessage("Was wollen Sie als nächstes tun?")
                         .setView(taskEditText)
-                        .setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String task = String.valueOf(taskEditText.getText());
-                                model.addItem(task);
-                            }
-                        })
+                        .setPositiveButton("Hinzufügen",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String task = String.valueOf(taskEditText.getText());
+                                        model.addItem(task);
+                                    }
+                                })
                         .setNegativeButton("Abbrechen", null)
                         .create();
                 dialog.show();
@@ -77,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements OnChangeListener<
 
     @Override
     public void onChange(ToDoModel model) {
+        adapter.clear();
+        adapter.addAll(model.getToDoList());
         adapter.notifyDataSetChanged();
     }
+
 }
