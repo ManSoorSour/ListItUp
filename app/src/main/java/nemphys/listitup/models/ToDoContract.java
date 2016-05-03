@@ -1,4 +1,4 @@
-package nemphys.listitup.model;
+package nemphys.listitup.models;
 
 import android.provider.BaseColumns;
 

@@ -1,4 +1,4 @@
-package nemphys.listitup.model;
+package nemphys.listitup.models;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
