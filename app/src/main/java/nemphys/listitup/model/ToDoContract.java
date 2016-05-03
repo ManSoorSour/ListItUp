@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 public final class ToDoContract {
 
-    private ToDoContract() {
+    public ToDoContract() {
     }
 
     public static class ToDoEntry implements BaseColumns {
