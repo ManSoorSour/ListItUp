@@ -22,10 +22,10 @@ public class ToDoModel extends SimpleObservable<ToDoModel> {
     public ArrayList<String> getToDoList() {
         ArrayList<String> toDoList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] projection = new String[]{ToDoContract.ToDoEntry._ID,
+                ToDoContract.ToDoEntry.COLUMN_TASK_TITLE};
         Cursor cursor = db.query(ToDoContract.ToDoEntry.TABLE_NAME,
-                new String[]{ToDoContract.ToDoEntry._ID,
-                        ToDoContract.ToDoEntry.COLUMN_TASK_TITLE},
-                null, null, null, null, null);
+                projection, null, null, null, null, null);
         while (cursor.moveToNext()) {
             int i = cursor.getColumnIndex(ToDoContract.ToDoEntry.COLUMN_TASK_TITLE);
             toDoList.add(cursor.getString(i));
